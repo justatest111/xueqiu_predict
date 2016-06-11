@@ -1,10 +1,16 @@
-#coding:utf-8
+# coding:utf-8
 from __future__ import unicode_literals
 
 from django.db import models
 
 # Create your models here.
+
+
 class Stock(models.Model):
+    stock_number = models.CharField(
+            verbose_name="stock_number",
+            max_length = 20,
+    )
     name = models.CharField(
         verbose_name="stock_name",
         max_length=100
@@ -35,16 +41,4 @@ class Stock(models.Model):
     class Meta:
         verbose_name = '股票信息'
         ordering = ['new_followers_number', 'update_time']
-
-    
-
-
-    
-
-        
-
-
-
-
-        
 
