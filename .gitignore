@@ -1,3 +1,4 @@
 # pyc
 *.pyc[cod]
-
+*.pyc
+migrations/
