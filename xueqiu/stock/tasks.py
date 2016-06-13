@@ -21,6 +21,7 @@ def getFollowers():
         stock_number = stock.stock_number
         #stock = "SH600570"
         result = requests.get("https://xueqiu.com/S/"+stock_number+"/follows", headers=headers)
+        print stock_number, result
         # result = requests.get("https://xueqiu.com/",headers=headers)
         # result = requests.get("https://segmentfault.com/t/python/blogs?page=1")
         # result = requests.get("http://www.baidu.com")
@@ -34,14 +35,16 @@ def getFollowers():
             if span.get('class') is None:
                 w = span
 #                print w
-        numbers =  w.text.split("(")[1].split(")")[0]
+        try:
+            numbers =  w.text.split("(")[1].split(")")[0]
+        except:
+            numbers = 404
         #print numbers
         stock.new_followers_number = int(stock.followers_number) - int(numbers)
         stock.followers_number = int(numbers)
         stock.save()
         #print stock,stock.followers_number
  
-logger = get_task_logger(__name__)
   
   # A periodic task that will run every minute (the symbol "*" means every)
 #@periodic_task(run_every=(crontab(hour="*", minute="*", day_of_week="*")))
