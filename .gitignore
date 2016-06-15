@@ -2,3 +2,5 @@
 *.pyc[cod]
 *.pyc
 migrations/
+db.sqlite3
+
