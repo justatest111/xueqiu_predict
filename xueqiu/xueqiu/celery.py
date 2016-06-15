@@ -15,6 +15,7 @@ app = Celery('xueqiu')
 # pickle the object when using Windows.
 #app.config_from_object('django.conf:settings', namespace='CELERY')
 app.config_from_object('django.conf:settings')
+app.conf.CELERY_TIMEZONE = 'Asia/Shanghai'
 
 # load task modules from all registered Django app configs.
 app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
