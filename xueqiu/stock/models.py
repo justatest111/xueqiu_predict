@@ -40,5 +40,5 @@ class Stock(models.Model):
 
     class Meta:
         verbose_name = '股票信息'
-        ordering = ['new_followers_number', 'update_time']
+        ordering = ['-new_followers_number', '-update_time']
 
