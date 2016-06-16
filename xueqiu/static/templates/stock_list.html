@@ -1,0 +1,12 @@
+    <table id="stocks">
+        {% for stock in stock_list %}
+            <tr>
+                <td>{{ stock.name }}</td>
+                <td>{{ stock.stock_number }}</td>
+                <td>{{ stock.followers_number }}</td>
+                <td>{{ stock.new_followers_number }}</td>
+                <td>{{ stock.value_increased_percent }}</td>
+                <td>{{ stock.update_time }}</td>
+            </tr>
+        {% endfor %}
+    </table>
