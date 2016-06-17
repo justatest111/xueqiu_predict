@@ -44,10 +44,9 @@ def getFollower(stock_number):
 #@periodic_task(run_every=(crontab(hour="9",day_of_week="*")))
 @shared_task
 def getAllFollowers():
-    stocks = Stock.objects.exclude(update_time=timezone.now().date())
+    stocks = Stock.objects.all()
     for stock in stocks:
-        stock_number = stock.stock_number
-        getFollower(stock_number)
+        getFollower.delay(stock.stock_number)
         #  print stock,stock.followers_number
         print "Done"
     print "All Done"
