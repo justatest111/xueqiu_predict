@@ -4,7 +4,7 @@ from models import Stock
 from celery.task.schedules import crontab
 from celery.decorators import periodic_task
 from celery.utils.log import get_task_logger
-from celery import shared_task
+from celery import shared_task,group
 import threading
 import time
 from django.utils import timezone
@@ -51,10 +51,9 @@ def getAllFollowers():
         print "Done"
     print "All Done"
 
-
-
-
-        
-
-  
-
+@shared_task
+def getAllFollowers_fast():
+    stocks = Stock.objects.all()
+    group(getFollower.s(i.stock_number) for i in stocks)()
+    print "finished !"
+    
