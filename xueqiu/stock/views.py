@@ -8,7 +8,7 @@ from django.views.generic.list import ListView
 from models import Stock
 
 class StockListView(ListView):
-    queryset = Stock.objects.all().order_by("-update_time")
+    queryset = Stock.objects.all().order_by("-new_followers_number")
     template_name = 'stock_list.html'
     context_object_name = "stock_list"
     paginate_by = 50
