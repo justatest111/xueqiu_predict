@@ -12,6 +12,7 @@ from django.utils import timezone
 
 @shared_task
 def getFollower(stock_number):
+    numbers = 404
     try:
         headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36',
                     'Host':'xueqiu.com',
@@ -26,9 +27,12 @@ def getFollower(stock_number):
         for span in spans:
             if span.get('class') is None:
                 w = span
-            numbers =  w.text.split("(")[1].split(")")[0]
+                numbers =  w.text.split("(")[1].split(")")[0]
     except:
-        numbers = 404
+        pass
+#      except Exception:
+        #  print Exception
+        #  numbers = 404
     stock.new_followers_number = int(numbers) - int(stock.followers_number)
     stock.followers_number = int(numbers)
     stock.save()
