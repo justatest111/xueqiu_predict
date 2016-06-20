@@ -52,8 +52,9 @@ def getAllFollowers():
     print "All Done"
 
 @shared_task
-def getAllFollowers_fast():
+def getAllFollowers_fast_with_group():
     stocks = Stock.objects.all()
-    group(getFollower.s(i.stock_number) for i in stocks)()
-    print "finished !"
+    jobs = group(getFollower.s(i.stock_number) for i in stocks)
+    result = jobs.apply_async()
+    print "finished !",result
     
