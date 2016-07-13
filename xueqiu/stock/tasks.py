@@ -51,7 +51,8 @@ def getAllFollowers():
         print "Done"
     print "All Done"
 
-@shared_task
+@periodic_task(run_every=(crontab(hour="9",day_of_week="*")))
+#@shared_task
 def getAllFollowers_fast_with_group():
     stocks = Stock.objects.all()
     jobs = group(getFollower.s(i.stock_number) for i in stocks)
