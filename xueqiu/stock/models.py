@@ -8,8 +8,8 @@ from django.db import models
 
 class Stock(models.Model):
     stock_number = models.CharField(
-            verbose_name="stock_number",
-            max_length = 20,
+        verbose_name="stock_number",
+        max_length=20,
     )
     name = models.CharField(
         verbose_name="stock_name",
@@ -34,11 +34,10 @@ class Stock(models.Model):
         'update_time',
         auto_now=True
     )
-    
+
     def __unicode__(self):
         return self.name
 
     class Meta:
         verbose_name = '股票信息'
         ordering = ['-new_followers_number', '-update_time']
-
