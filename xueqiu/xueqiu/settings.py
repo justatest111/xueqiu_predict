@@ -15,6 +15,12 @@ import os
 import socket
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if socket.gethostname() == "markvps":
+    DEBUG = True
+    DEBUG_DATABASE = False
+else:
+    DEBUG = True
+    DEBUG_DATABASE = True
 
 
 # Quick-start development settings - unsuitable for production
@@ -24,8 +30,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'wy!9!jhu#cg#ajsk7)vgobhn-jlr*hdw!5nr!gdwx(m5)#zm5&'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
-DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 
@@ -78,12 +82,27 @@ WSGI_APPLICATION = 'xueqiu.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+if DEBUG_DATABASE:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
     }
-}
+else:
+  DATABASES = {
+          'default': {
+                          'ENGINE': 'django.db.backends.mysql',
+                          'NAME':'xueqiu',
+                          'USER':'mark',
+                          'PASSWORD':'8354210',
+                          'HOST': 'localhost',
+                          'PORT': '3306'
+                      }
+          }
+
+   
+    
 
 
 # Internationalization
