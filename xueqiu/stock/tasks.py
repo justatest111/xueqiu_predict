@@ -1,14 +1,10 @@
 import requests
 from BeautifulSoup import BeautifulSoup
-from models import Stock
 from celery.task.schedules import crontab
 from celery.decorators import periodic_task
-from celery.utils.log import get_task_logger
 from celery import shared_task, group
-import threading
-import time
-from django.utils import timezone
-
+from django.db.models import F
+from models import Stock
 
 @shared_task
 def getFollower(stock_number):
@@ -29,30 +25,24 @@ def getFollower(stock_number):
             if span.get('class') is None:
                 w = span
                 numbers = w.text.split("(")[1].split(")")[0]
-    except:
-        pass
-#      except Exception:
-        #  print Exception
-        #  numbers = 404
-    stock.new_followers_number = int(numbers) - int(stock.followers_number)
+    except Exception as e:
+        print e
+    stock.new_followers_number = int(numbers) - F('followers_number')
     stock.followers_number = int(numbers)
     stock.save()
     print stock.followers_number, stock.name, result, stock.update_time
 
 
-#@periodic_task(run_every=(crontab(hour="9",day_of_week="*")))
 @shared_task
 def getAllFollowers():
     stocks = Stock.objects.all()
     for stock in stocks:
         getFollower.delay(stock.stock_number)
-        #  print stock,stock.followers_number
         print "Done"
     print "All Done"
 
 
 @periodic_task(run_every=(crontab(hour="9", day_of_week="*")))
-#@shared_task
 def getAllFollowers_fast_with_group():
     stocks = Stock.objects.all()
     jobs = group(getFollower.s(i.stock_number) for i in stocks)

@@ -11,6 +11,10 @@ class StockAdmin(admin.ModelAdmin):
         'value_increased_percent',
         'update_time'
     )
+    search_fields = ['stock_number', 'name']
+    list_filter = ('update_time',)
+    date_hierarchy = 'update_time'
+
         
         
         
