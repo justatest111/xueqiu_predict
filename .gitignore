@@ -1,6 +1,7 @@
 # pyc
 *.pyc[cod]
 *.pyc
+*.log
 migrations/
 db.sqlite3
 env/
